@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+set -x
+
+cleanup() {
+    [ -z "$TMPDIR" ] || rm -r "$TMPDIR"
+}
+trap cleanup EXIT
+
+TMPDIR=$(mktemp -d)
+
+cp -a dateutil/test $TMPDIR
+cd $TMPDIR
+nosetests-2.7
+nosetests3
+
